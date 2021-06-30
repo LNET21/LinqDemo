@@ -11,6 +11,49 @@ namespace LinqDemo
             var persons = GetPersons();
             var numbersArray = Enumerable.Range(1, 10).ToArray();
             var numbersList = Enumerable.Range(1, 10).ToList();
+
+            var str = "Hej";
+            var fullStr = str.Add("Då");
+            var fullStr2 = str.Add("Då", "Vi", "Ses", "Imorgon");
+
+            Console.WriteLine(fullStr2);
+
+            int x = 1;
+            x.IntExt();
+
+
+            Console.WriteLine("-----------------");
+
+            var longNames = persons.ReturnIfTrue(TestNameLength);
+            var longNames2 = persons.ReturnIfTrue(p => p.Name.Length > 10);
+            var longNameAges = persons.ReturnIfTrue(p => p.Name.Length > 10)
+                                    .Select(p => p.Age);
+
+            var numbersInRange = numbersArray.ReturnIfTrue(n => n < 5).Count();
+            var numbersInRange2 = numbersArray.ReturnIfTrue(n => n < 5);
+
+            var result = persons.Where(p => p.Name.StartsWith("S"))
+                                .Where(p => p.Name.EndsWith("a"))
+                                .Select(p => new PersonDTO
+                                {
+                                    Name = p.Name,
+                                    NamesLength = p.Name.Length
+
+                                });
+                                
+                                //.Select(p => p.Age);
+                                //.Sum();
+                                //.Min();
+                                //.Average();
+
+
+
+            Console.ReadKey();
+        }
+
+        private static bool TestNameLength(Person pers)
+        {
+            return pers.Name.Length > 10;
         }
 
         private static IEnumerable<Person> GetPersons()
